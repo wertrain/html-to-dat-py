@@ -19,9 +19,8 @@ class TestSequenceFunctions(unittest.TestCase):
             self.assertTrue(i == perser.check_version(html))
 
     def test_perse(self):
-        perser.perse(self.files[0])
-        #for i, html in enumerate(self.files):
-        #    perser.perse(html)
+        for i, html in enumerate(self.files):
+            self.assertTrue(0 < len(perser.perse(html)))
 
 if __name__ == '__main__':
     unittest.main()

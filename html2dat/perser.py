@@ -51,22 +51,46 @@ class __Perser:
         return self.perse_0(html)
     
     def perse_2(self, html):
-        return
+        #html = unicode(html, 'shift-jis', 'ignore').encode('utf-8')
+        soup = BeautifulSoup(html.decode('shift_jisx0213'), 'html.parser')
+        number_list = soup.find_all('div', class_='number')
+        name_list = soup.find_all('div', class_='name')
+        date_list = soup.find_all('div', class_='date')
+        message_list = soup.find_all('div', class_='message')
+        
+        rname = re.compile('<b>(?:<a href="mailto:(.+?)">)?(.*?)(?:</font>|</a>)?</b>')
+        rdate = re.compile('<div class="date">(.+?)</div>')
+        rbody = re.compile('<div class="message"> (.+?)(</br>)*</div>?')
+        responses = []
+        for i, number in enumerate(number_list):
+            match = rname.search(name_list[i].encode('cp932'))
+            mail = match.group(1)
+            name = match.group(2)
+            match = rdate.search(date_list[i].encode('cp932'))
+            date_time_id = match.group(1)
+            match = rbody.search(message_list[i].encode('cp932'))
+            body = match.group(1)
+            responses.append({
+               'number': number,
+               'mail': mail if mail is not None else '',
+               'name': name,
+               'date_time_id': date_time_id,
+               'body': body,
+            })
+        return responses
 
 def __responses2dat(responses):
     u"""__Perserクラスでパースしたデータをdatの形式にして返す。"""
     if responses is None:
-        return
+        return ''
     dat = ''
     separator = '<>'
     for response in responses:
-        dat += response['name'] + separator + response['mail'] + separator + response['date_time_id'] + separator + response['body'] + '\n'
+        dat += (response['name'] + separator + response['mail'] + separator + response['date_time_id'] + separator + response['body'] + separator + '\n')
     return dat
 
 def perse(html):
-    u"""html を突っ込むといい感じに dat にして返してくれる関数"""
+    u"""html を突っ込むといい感じに dat にして返してくれる。"""
     version = check_version(html)
     perser = getattr(__Perser(), 'perse_' + str(check_version(html)))
-    #for line in html.splitlines():
-    #    print line
-    print __responses2dat(perser(html))
+    return __responses2dat(perser(html))
