@@ -80,7 +80,7 @@ class __Perser:
         return responses
 
 def __responses2dat(responses):
-    u"""__Perserクラスでパースしたデータをdatの形式にして返す。"""
+    u"""__Perserクラスでパースしたデータを dat の形式にして返す。"""
     if responses is None:
         return ''
     dat = ''
@@ -91,6 +91,10 @@ def __responses2dat(responses):
 
 def perse(html):
     u"""html を突っ込むといい感じに dat にして返してくれる。"""
-    version = check_version(html)
-    perser = getattr(__Perser(), 'perse_' + str(check_version(html)))
-    return __responses2dat(perser(html))
+    try:
+        version = check_version(html)
+        perser = getattr(__Perser(), 'perse_' + str(check_version(html)))
+        return __responses2dat(perser(html))
+    except Exception as e: # ざっくりとしすぎたエラー処理
+        logging.error(traceback.format_exc())
+        return None
