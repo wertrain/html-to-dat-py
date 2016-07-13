@@ -21,6 +21,10 @@ class TestSequenceFunctions(unittest.TestCase):
     def test_perse(self):
         for i, html in enumerate(self.files):
             self.assertTrue(0 < len(perser.perse(html)))
+            
+    def test_thread(self):
+        for i, html in enumerate(self.files):
+            self.assertTrue(0 < len(perser.get_thread(html)))
 
 if __name__ == '__main__':
     unittest.main()

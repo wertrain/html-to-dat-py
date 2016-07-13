@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 from datetime import datetime
 import logging
 import re
+import traceback
 
 def check_version(html):
     u"""dt の有無で html の形式を判定する。
@@ -79,6 +80,12 @@ class __Perser:
             })
         return responses
 
+def __perse_thread(html):
+    soup = BeautifulSoup(html.decode('shift_jisx0213'), 'html.parser')
+    return {
+        'title': soup.find('title').string
+    }
+
 def __responses2dat(responses):
     u"""__Perserクラスでパースしたデータを dat の形式にして返す。"""
     if responses is None:
@@ -96,5 +103,13 @@ def perse(html):
         perser = getattr(__Perser(), 'perse_' + str(check_version(html)))
         return __responses2dat(perser(html))
     except Exception as e: # ざっくりとしすぎたエラー処理
+        logging.error(traceback.format_exc())
+        return None
+
+def get_thread(html):
+    u"""html を突っ込むとスレッド情報を返してくれる。"""
+    try:
+        return __perse_thread(html)
+    except Exception as e: # ざっくりと(ry
         logging.error(traceback.format_exc())
         return None
