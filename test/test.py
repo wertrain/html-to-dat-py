@@ -24,7 +24,7 @@ class TestSequenceFunctions(unittest.TestCase):
             
     def test_thread(self):
         for i, html in enumerate(self.files):
-            self.assertTrue(0 < len(perser.get_thread(html)))
+            self.assertTrue(perser.get_thread(html) is not None)
 
 if __name__ == '__main__':
     unittest.main()

@@ -82,8 +82,16 @@ class __Perser:
 
 def __perse_thread(html):
     soup = BeautifulSoup(html.decode('shift_jisx0213'), 'html.parser')
+    url = ''
+    for a in soup.find_all('a'):
+        if a.string == u'全部':
+            url = a.get('href')
+            break
+    #if url.startswith('..'):
+    #    print soup.findAll(attrs={'og:url'}) 
     return {
-        'title': soup.find('title').string
+        'title': soup.find('title').string,
+        'url': url
     }
 
 def __responses2dat(responses):
