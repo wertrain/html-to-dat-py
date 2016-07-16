@@ -87,8 +87,13 @@ def __perse_thread(html):
         if a.string == u'全部':
             url = a.get('href')
             break
-    #if url.startswith('..'):
-    #    print soup.findAll(attrs={'og:url'}) 
+    # 相対パスであった場合、 meta に URL が書いているかチェックする
+    if url.startswith('..'):
+        metaurl = soup.find('meta', attrs={'property': 'og:url'})
+        if metaurl is not None:
+            url = metaurl['content']
+        else:
+            logging.info('not found url: ' + title)
     return {
         'title': soup.find('title').string,
         'url': url
