@@ -94,7 +94,9 @@ def __perse_thread(html):
             url = metaurl['content']
         else:
             logging.info('not found url: ' + title)
+    id = url.split('/')[-2 if (url.rindex('/') == len(url) - 1) else -1]
     return {
+        'id': id,
         'title': soup.find('title').string,
         'url': url
     }
