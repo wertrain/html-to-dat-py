@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="2ちゃんねるのHTMLをdatに変換します。">
+    <meta name="author" content="">
+    <link rel="icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <!--<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">-->
+    <link rel="stylesheet" href="/static/vendor/css/bootstrap.cosmo.min.css">
+    {# 追加スタイルシート #}
+    {% block style %}{% endblock %}
+    
+    <title>HTML→DAT 変換</title>
+</head>
+
+<body>
+
+  <div class="container">
+
+    {# ページのコンテンツ部分 #}
+    {% block content %}{% endblock %}
+
+  </div> <!-- /container -->
+
+  <script src="//code.jquery.com/jquery-2.2.0.min.js"></script>
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  {# 追加のスクリプト #}
+  {% block script %}{% endblock %}
+</body>
+</html>

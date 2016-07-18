@@ -15,6 +15,10 @@ threadsafe: yes
 # Handlers define how to route requests to your application.
 handlers:
 
+- url: /favicon\.ico
+  static_files: favicon.ico
+  upload: favicon\.ico
+
 # App Engine serves and caches static files contained in the listed directories
 # (and subdirectories). Uncomment and set the directory as needed.
 #- url: /client

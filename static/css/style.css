@@ -1,0 +1,27 @@
+body {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-family:  "Hiragino Kaku Gothic ProN", "游ゴシック", YuGothic, Meiryo, sans-serif;
+}
+
+/* 共通センタリング */
+.text-center {
+    text-align: center;
+}
+
+/* ナビバー */
+.navbar {
+    margin-bottom: 20px;
+}
+
+/* 説明文下余白 */
+.ul-explain {
+    padding-bottom: 20px;
+}
+
+/* フッター */
+.footer {
+    padding-top: 10px;
+    height: 40px;
+    background-color: #f5f5f5;
+}
