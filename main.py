@@ -10,11 +10,6 @@ def top():
     """トップページを表示する"""
     return render_template('home.html')
 
-@app.route('/error')
-def error():
-    """トップページを表示する"""
-    return render_template('home.html', page_type=0)
-    
 @app.route('/api/dat', methods=['POST', 'GET'])
 def todat():
     if request.method == 'POST':

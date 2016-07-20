@@ -39,8 +39,8 @@
               {'html': html},
               function(data, textStatus, jqXHR) {
                   if (data.length === 0) {
-                    $("#alert-area").append($('<div id="error-alert" class="alert alert-danger" data-alert>変換できませんでした。</div>'));
-                    $("#error-alert").delay(2000).fadeOut("slow", function () { $(this).remove(); });
+                    $("#alert-area").append($('<div class="alert alert-danger error-alert" data-alert>変換できませんでした。</div>'));
+                    $(".error-alert").delay(2000).fadeOut("slow", function () { $(this).remove(); });
                   } else {
                       $('#dat').val(data);
                   }
