@@ -4,9 +4,10 @@
 {% endblock %}
 
 {% block content %}
-    <div class="well">
+    <div>
       <fieldset>
         <legend>HTMLをDATに変換</legend>
+        <p>2ちゃんねるの HTML を dat 形式のテキストに変換します。</p>
         <div class="form-group">
           <textarea id="html" rows="12" autocomplete="off" class="form-control" placeholder="HTML">
 &lt;!DOCTYPE HTML&gt;
@@ -18,7 +19,7 @@
         </div>
         <div class="form-group">
           <div class="text-center">
-            <button id="todat" type="submit" class="btn btn-default">↓変換↓</button>
+            <button id="todat" type="submit" class="btn btn-default">変換</button>
           </div>
         </div>
         <div class="form-group">
@@ -27,6 +28,12 @@
         <div id="alert-area">
         </div>
      </fieldset>
+    </div>
+    <div class="well hidden">
+      <p>Web API としても使えます。</p>
+      <span class="badge">POST</span> <code>/api/dat</code> </br>
+      <span class="badge">PARAM</span> html: 2chスレッドのHTML </br>
+      <span class="badge">RESPONSE</span> text: datに変換したテキスト </br>
     </div>
 {% endblock %}
 
