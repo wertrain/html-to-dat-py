@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block style %}
+{% endblock %}
+
+{% block content %}
+    <div class="well">
+      <h1>HTML→DAT変換 API</h1>
+      <p>常識の範囲でご自由に使用してください。</br>
+      （このサービスは Google App Engine の無料枠で作成されているため、無茶をするとすぐに使えなくなります。）</p>
+      <span class="badge">POST</span> <code>/api/dat</code> </br>
+      <span class="badge">PARAM</span> html: 2chスレッドのHTML </br>
+      <span class="badge">RESPONSE</span> text: datに変換したテキスト </br>
+    </div>
+{% endblock %}
+
+{% block script %}
+  <script>
+  </script>
+{% endblock %}
