@@ -5,12 +5,18 @@
 
 {% block content %}
     <div class="well">
-      <h1>HTML→DAT変換 API</h1>
-      <p>常識の範囲でご自由に使用してください。</br>
-      （このサービスは Google App Engine の無料枠で作成されているため、無茶をするとすぐに使えなくなります。）</p>
-      <span class="badge">POST</span> <code>/api/dat</code> </br>
-      <span class="badge">PARAM</span> html: 2chスレッドのHTML </br>
-      <span class="badge">RESPONSE</span> text: datに変換したテキスト </br>
+      <fieldset>
+        <legend>HTML→DAT変換 API</legend>
+        <p>2ちゃんねるの HTML を dat 形式のテキストに変換します。</br>
+        常識の範囲でご自由に使用してください。</p>
+        （このサービスは Google App Engine の無料枠で作成されているため、無茶をするとすぐに使えなくなります。）</p>
+        <hr>
+        <span class="badge">POST</span> <code>/api/dat</code> </br>
+        <span class="badge">param</span> html: 2chスレッドのHTML </br>
+        <span class="badge">response</span> text: datに変換したテキスト </br>
+        <hr>
+        また、乱筆乱文ながらソースコードは <a href="https://github.com/wertrain/html-to-dat-py">https://github.com/wertrain/html-to-dat-py</a> にあります。ご自由にご参照・ご利用ください。</br> 
+      </fieldset>
     </div>
 {% endblock %}
 
