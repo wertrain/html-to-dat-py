@@ -11,8 +11,8 @@ def check_version(html):
     2 は そもそも dt/dd の形で書かれていないものになる。
     """
     html = unicode(html, 'shift-jis', 'ignore')
-    if html.count('dt') > 0:
-            return 0 if html.count('/dt') > 0 else 1
+    if html.count('<dt>') > 0:
+        return 0 if html.count('</dt>') > 0 else 1
     else:
         return 2
 
@@ -21,7 +21,7 @@ class __Perser:
     正規表現でまとめれば、0と1は同じ処理が可能なので、実質2種類のパースを行う。
     """
     def perse_0(self, html):
-        r = re.compile('<dt.*?>([0-9]+).+?(?:"mailto:(.+?)">)?<b>(.*?)</b>(?:</font>|</a>)?(?:.){2}(.+?)(?:</dt>)*(?:<dd>) ?(.*?)<br><br>')
+        r = re.compile('<dt.*?>([0-9]+).+?(?:"mailto:(.+?)">)?<b>(.*)</b>?(?:</font>|</a>)?(?:.){2}(.+?)(?:</dt>)*(?:<dd>) ?(.*?)<br><br>')
         responses = []
         for line in html.splitlines():
             match = r.search(line)
@@ -36,7 +36,6 @@ class __Perser:
                 try:
                     tmp = date_time_id.split(' ')
                     at = datetime.strptime(tmp[0][:10] + ' ' + tmp[1][:11], '%Y/%m/%d %H:%M:%S.%f')
-                    id = tmp[2][3:] if len(tmp) > 2 else None
                 except:
                     continue
                 responses.append({
@@ -58,7 +57,6 @@ class __Perser:
         name_list = soup.find_all('div', class_='name')
         date_list = soup.find_all('div', class_='date')
         message_list = soup.find_all('div', class_='message')
-        
         rname = re.compile('<b>(?:<a href="mailto:(.+?)">)?(.*?)(?:</font>|</a>)?</b>')
         rdate = re.compile('<div class="date">(.+?)</div>')
         rbody = re.compile('<div class="message"> (.+?)(</br>)*</div>?')
@@ -69,6 +67,11 @@ class __Perser:
             name = match.group(2)
             match = rdate.search(date_list[i].encode('cp932'))
             date_time_id = match.group(1)
+            try:
+                tmp = date_time_id.split(' ')
+                at = datetime.strptime(tmp[0][:10] + ' ' + tmp[1][:11], '%Y/%m/%d %H:%M:%S.%f')
+            except:
+                continue
             match = rbody.search(message_list[i].encode('cp932'))
             body = match.group(1)
             responses.append({
@@ -81,7 +84,7 @@ class __Perser:
         return responses
 
 def __perse_thread(html):
-    soup = BeautifulSoup(html.decode('shift_jisx0213'), 'html.parser')
+    soup = BeautifulSoup(html.decode('shift_jisx0213', 'ignore'), 'html.parser')
     url = ''
     for a in soup.find_all('a'):
         if a.string == u'全部':
@@ -93,11 +96,16 @@ def __perse_thread(html):
         if metaurl is not None:
             url = metaurl['content']
         else:
-            logging.info('not found url: ' + title)
+            # base タグに書いてあるかチェックする
+            baseurl = soup.find('base')
+            if baseurl is not None:
+                url = baseurl.get('href') + url[3:]
+            else:
+                logging.info('not found url: ' + soup.find('title').string)
     id = url.split('/')[-2 if (url.rindex('/') == len(url) - 1) else -1]
     return {
         'id': id,
-        'title': soup.find('title').string,
+        'title': soup.find('title').string.strip(),
         'url': url
     }
 

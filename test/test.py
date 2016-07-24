@@ -8,7 +8,8 @@ import unittest
 class TestSequenceFunctions(unittest.TestCase):
     def setUp(self):
         self.files = []
-        for path in ['data/1386326019.html', 'data/1447860021.html', 'data/1467492969.html']:
+        #for path in ['data/1456805094.html', 'data/1386326019.html', 'data/1447860021.html', 'data/1467492969.html']:
+        for path in ['data/1465076427.html']:
             file = open(path)
             html = '\n'.join(file.readlines())
             self.files.append(html)
